@@ -10,6 +10,15 @@ namespace B2bzanden\ChangeCategoryTitle\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
+/**
+ * To be called from etc/frontend/events.xml
+ * <?xml version="1.0"?>
+ * <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+ *   <event name="layout_generate_blocks_after">
+ *     <observer name="categoryCanonicalWithFilter" instance="B2bzanden\ChangeCategoryTitle\Observer\CategoryCanonical" />
+ *   </event>
+ * </config>
+ */
 class CategoryCanonical implements ObserverInterface
 {
     protected $pageConfig;
