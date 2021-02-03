@@ -3,6 +3,7 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace B2bzanden\ChangeCategoryTitle\Block\Category;
 
 /**
@@ -49,7 +50,8 @@ class View extends \Magento\Catalog\Block\Category\View
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Eav\Model\Config $eavConfig,
         array $data = []
-    ) {
+    )
+    {
         $this->_categoryHelper = $categoryHelper;
         $this->_catalogLayer = $layerResolver->get();
         $this->_coreRegistry = $registry;
@@ -107,9 +109,9 @@ class View extends \Magento\Catalog\Block\Category\View
         } catch (\Exception $exception) {
             // just catch
         }
-        if(isset($brandOptionId) && $brandOptionId > 0) {
+        if (isset($brandOptionId) && $brandOptionId > 0) {
             $attribute = $this->eavConfig->getAttribute('catalog_product', 'vanderzanden_submerken');
-            $brandOptionlabel =  $attribute->getSource()->getOptionText($brandOptionId);
+            $brandOptionlabel = $attribute->getSource()->getOptionText($brandOptionId);
         }
         if (isset($category)) {
             switch ($category->getLevel()) {
@@ -133,8 +135,12 @@ class View extends \Magento\Catalog\Block\Category\View
                     $suffix = '';
 
             }
-            if(isset($brandOptionlabel)) {
-                return $brandOptionlabel.' '.$prefix . $name . $suffix;
+            if (isset($brandOptionlabel)) {
+                if ($brandOptionlabel === $this->getCurrentCategory()->getName()) {
+                    $brandOptionlabel = '';
+                }
+                
+                return $brandOptionlabel . ' ' . $prefix . $name . $suffix;
             } else {
                 return $prefix . $name . $suffix;
             }
