@@ -104,47 +104,64 @@ class View extends \Magento\Catalog\Block\Category\View
 
     public function getB2bCategoryTitle($category)
     {
-        try {
-            $brandOptionId = $this->getRequest()->getParam('vanderzanden_submerken');
-        } catch (\Exception $exception) {
-            // just catch
-        }
-        if (isset($brandOptionId) && $brandOptionId > 0) {
-            $attribute = $this->eavConfig->getAttribute('catalog_product', 'vanderzanden_submerken');
-            $brandOptionlabel = $attribute->getSource()->getOptionText($brandOptionId);
-        }
-        if (isset($category)) {
-            switch ($category->getLevel()) {
-                case 2:
-                case 3:
-                    $prefix = '';
-                    $name = $this->getCurrentCategory()->getName();
-                    $suffix = ' onderdelen';
-                    break;
+        $categoryName = $this->getCurrentCategory()->getName();
 
-                case 4:
-                case 5:
-                    $prefix = $category->getParentCategory()->getName() . ' ';
-                    $name = lcfirst($this->getCurrentCategory()->getName());
-                    $suffix = '';
-                    break;
-
-                default:
-                    $prefix = '';
-                    $name = $this->getCurrentCategory()->getName();
-                    $suffix = '';
-
-            }
-            if (isset($brandOptionlabel)) {
-                if ($brandOptionlabel === $this->getCurrentCategory()->getName()) {
-                    $brandOptionlabel = '';
-                }
-                
-                return $brandOptionlabel . ' ' . $prefix . $name . $suffix;
-            } else {
-                return $prefix . $name . $suffix;
-            }
+        if (!isset($category)) {
+            return $categoryName;
         }
-        return $this->getCurrentCategory()->getName();
+
+        $suffix = null;
+
+        if (in_array($category->getLevel(), [2, 3])) {
+            $suffix = ' onderdelen';
+        }
+
+        return $categoryName . $suffix;
     }
+
+//    public function getB2bCategoryTitle($category)
+//    {
+//        try {
+//            $brandOptionId = $this->getRequest()->getParam('vanderzanden_submerken');
+//        } catch (\Exception $exception) {
+//            // just catch
+//        }
+//        if (isset($brandOptionId) && $brandOptionId > 0) {
+//            $attribute = $this->eavConfig->getAttribute('catalog_product', 'vanderzanden_submerken');
+//            $brandOptionlabel = $attribute->getSource()->getOptionText($brandOptionId);
+//        }
+//        if (isset($category)) {
+//            switch ($category->getLevel()) {
+//                case 2:
+//                case 3:
+//                    $prefix = '';
+//                    $name = $this->getCurrentCategory()->getName();
+//                    $suffix = ' onderdelen';
+//                    break;
+//
+//                case 4:
+//                case 5:
+//                    $prefix = $category->getParentCategory()->getName() . ' ';
+//                    $name = lcfirst($this->getCurrentCategory()->getName());
+//                    $suffix = '';
+//                    break;
+//
+//                default:
+//                    $prefix = '';
+//                    $name = $this->getCurrentCategory()->getName();
+//                    $suffix = '';
+//
+//            }
+//            if (isset($brandOptionlabel)) {
+//                if ($brandOptionlabel === $this->getCurrentCategory()->getName()) {
+//                    $brandOptionlabel = '';
+//                }
+//
+//                return $brandOptionlabel . ' ' . $prefix . $name . $suffix;
+//            } else {
+//                return $prefix . $name . $suffix;
+//            }
+//        }
+//        return $this->getCurrentCategory()->getName();
+//    }
 }
