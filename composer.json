@@ -5,7 +5,7 @@
   "homepage": "https://github.com/B2bzanden/B2bzanden_M2_ChangeCategoryTitle",
   "description": "Magento 2 module to adjust the Catalog Category Title",
   "keywords":[ "composer-installer", "magento"],
-  "version": "2.0.0",
+  "version": "2.1.1",
   "require": {
     "php": ">=7.1.0"
   },
